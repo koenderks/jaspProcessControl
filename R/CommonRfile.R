@@ -301,3 +301,82 @@
   }
   return(dataDiameter)
 }
+
+.plotMarginal <- function(column, variableName,
+                          rugs = FALSE, displayDensity = FALSE) {
+  column <- as.numeric(column)
+  variable <- na.omit(column)
+
+  if(length(variable) == 0)
+    return(NULL)
+
+  h <- hist(variable, plot = FALSE)
+
+  if (!displayDensity)
+    yhigh <- max(h$counts)
+  else {
+    dens <- density(variable)
+    yhigh <- max(max(h$density), max(dens$y))
+  }
+
+  ylow <- 0
+  xticks <- base::pretty(c(variable, h$breaks), min.n = 3)
+
+  if (!displayDensity) {
+    p <-
+      jaspGraphs::drawAxis(
+        xName = variableName, yName = gettext("Counts"), xBreaks = xticks,
+        yBreaks = base::pretty(c(0, h$counts)), force = TRUE, xLabels = xticks
+      )
+  } else {
+    p <-
+      jaspGraphs::drawAxis(
+        xName = variableName, yName = gettext("Density"), xBreaks = xticks,
+        yBreaks = c(0,  1.05 * yhigh), force = TRUE, yLabels = NULL,
+        xLabels = xticks
+      )
+  }
+    
+
+  if (displayDensity) {
+    p <- p +
+      ggplot2::geom_histogram(
+        data = data.frame(variable),
+        mapping = ggplot2::aes(x = variable, y = ..density..),
+        binwidth = (h$breaks[2] - h$breaks[1]),
+        fill = "grey",
+        col = "black",
+        size = .7,
+        center = ((h$breaks[2] - h$breaks[1])/2)
+      ) +
+      ggplot2::geom_line(
+        data = data.frame(x = dens$x, y = dens$y),
+        mapping = ggplot2::aes(x = x, y = y),
+        lwd = 1,
+        col = "black"
+      )
+  } else {
+    p <- p +
+      ggplot2::geom_histogram(
+        data     = data.frame(variable),
+        mapping  = ggplot2::aes(x = variable, y = ..count..),
+        binwidth = (h$breaks[2] - h$breaks[1]),
+        fill     = "grey",
+        col      = "black",
+        size     = .7,
+        center    = ((h$breaks[2] - h$breaks[1])/2)
+      )
+  }
+    
+
+  # JASP theme
+  p <- jaspGraphs::themeJasp(p,
+                             axisTickWidth = .7,
+                             bty = list(type = "n", ldwX = .7, lwdY = 1))
+  # TODO: Fix jaspgraphs axis width X vs Y. See @vandenman.
+
+  if (displayDensity)
+    p <- p + ggplot2::theme(axis.ticks.y = ggplot2::element_blank())
+
+  return(p)
+}

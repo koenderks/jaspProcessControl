@@ -558,7 +558,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
 
   plot <- createJaspPlot(title = "Bias Histogram")
 
-  p <- jaspDescriptives:::.plotMarginal(column = dataForPart, variableName = "Measurement")
+  p <- .plotMarginal(column = dataForPart, variableName = "Measurement")
 
   plot$dependOn(c("biasHistogram"))
 
