@@ -1,4 +1,3 @@
-import(jaspBase)
 export(processCapability)
 export(processControl)
 export(measurementSystemAnalysisGaugeRR)
