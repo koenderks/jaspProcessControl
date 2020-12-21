@@ -114,14 +114,14 @@ processCapability <- function(jaspResults, dataset, options){
   thePlot <- createJaspPlot(title = gettext("Histogram"), width = 600, height = 300)
   thePlot$dependOn(options = "histogram")
   plotDat <- data.frame(measurements = as.numeric(unlist(dataset[, diameter])))
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(plotDat[["measurements"]], min.n = 4)
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(plotDat[["measurements"]], min.n = 4)
 
   p <- ggplot2::ggplot(plotDat, ggplot2::aes(x = measurements)) +
     ggplot2::scale_x_continuous(name = gettext("Measurements"), breaks = xBreaks) +
     ggplot2::geom_histogram(ggplot2::aes(y =..density..), fill = "grey", col = "black", size = .7) +
     ggplot2::stat_function(fun = dnorm, color = "blue",
                            args = list(mean = mean(plotDat[["measurements"]]), sd = sd(plotDat[["measurements"]])))
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
 
   thePlot$plotObject <- p
   return(thePlot)
@@ -147,7 +147,7 @@ processCapability <- function(jaspResults, dataset, options){
   stDevWithin <- q$std.dev   #stDevWithin <- rBar/d2
   stDevOverall <- sd(as.matrix(dataDiameter),na.rm = TRUE)
 
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(unlist(dataDiameter), targetValue, LSL, USL), min.n = 4)
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(unlist(dataDiameter), targetValue, LSL, USL), min.n = 4)
 
   p <- ggplot2::ggplot(plotDat, ggplot2::aes(x = measurements)) +
     ggplot2::scale_x_continuous(name = gettext("Measurements"), breaks = xBreaks, limits = range(xBreaks)) +
@@ -169,7 +169,7 @@ processCapability <- function(jaspResults, dataset, options){
     ggplot2::geom_vline(xintercept = targetValue,
                         linetype = "dotted",
                         color = "green")
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
 
   thePlot$plotObject <- p
   return(thePlot)

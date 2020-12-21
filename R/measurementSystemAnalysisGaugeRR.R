@@ -219,7 +219,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   plot$dependOn(c("rangeScatterPlotOperators", "rangeScatterPlotFitLine", "rangeScatterPlotOriginLine"))
 
   p <- ggplot2::ggplot(data = dataset, ggplot2::aes_string(x = measurements[1], y = measurements[2])) +
-    jaspGraphs::geom_point() + ggplot2::scale_x_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1)) +
+    JASPgraphs::geom_point() + ggplot2::scale_x_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1)) +
     ggplot2::scale_y_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1))
 
   if (options[["rangeScatterPlotFitLine"]])
@@ -228,7 +228,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   if (options[["rangeScatterPlotOriginLine"]])
     p <- p + ggplot2::geom_abline(col = "gray", linetype = "dashed")
 
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
 
   plot$plotObject <- p
 
@@ -248,10 +248,10 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   plot$dependOn(c("rangeScatterPlotOperatorParts"))
 
   p <- ggplot2::ggplot() +
-    jaspGraphs::geom_point(data = dataset, ggplot2::aes_string(x = "Parts", y = measurements[1]), fill = "red",size = 4) +
-    jaspGraphs::geom_point(data = dataset, ggplot2::aes_string(x = "Parts", y = measurements[2]), fill = "green",size = 4)
+    JASPgraphs::geom_point(data = dataset, ggplot2::aes_string(x = "Parts", y = measurements[1]), fill = "red",size = 4) +
+    JASPgraphs::geom_point(data = dataset, ggplot2::aes_string(x = "Parts", y = measurements[2]), fill = "green",size = 4)
 
-  p <- jaspGraphs::themeJasp(p) + ggplot2::theme(legend.position = "right")
+  p <- JASPgraphs::themeJasp(p) + ggplot2::theme(legend.position = "right")
 
   plot$plotObject <- p
 
@@ -386,13 +386,13 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   p <- ggplot2::ggplot()
 
   if(options$gaugeByPartAll)
-    p <- p + jaspGraphs::geom_point(data = dataset, ggplot2::aes_string(x = parts, y = "Measurement"), col = "gray")
+    p <- p + JASPgraphs::geom_point(data = dataset, ggplot2::aes_string(x = parts, y = "Measurement"), col = "gray")
 
 
-  p <- p + jaspGraphs::geom_point(data = means, ggplot2::aes_string(x = parts, y = "Measurement")) +
+  p <- p + JASPgraphs::geom_point(data = means, ggplot2::aes_string(x = parts, y = "Measurement")) +
     ggplot2::scale_y_continuous(limits = c(min(dataset["Measurement"]) * 0.9, max(dataset["Measurement"]) * 1.1))
 
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
 
   plot$plotObject <- p
 
@@ -411,7 +411,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   p <- ggplot2::ggplot() +
     ggplot2::geom_boxplot(data = dataset, ggplot2::aes_string(x = operators, y = "Measurement"))
 
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
 
   plot$plotObject <- p
 
@@ -443,14 +443,14 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   colors <- rainbow(length(names(byOperator)))
 
   for(i in 1:length(names(byOperator))){
-    p <- p + jaspGraphs::geom_line(data = meansPerOperator, ggplot2::aes_string(x = "Part", y = names(byOperator)[i],
+    p <- p + JASPgraphs::geom_line(data = meansPerOperator, ggplot2::aes_string(x = "Part", y = names(byOperator)[i],
                                                                                 group = i), col = colors[i]) +
-      jaspGraphs::geom_point(data = meansPerOperator, ggplot2::aes_string(x = "Part", y = names(byOperator)[i],
+      JASPgraphs::geom_point(data = meansPerOperator, ggplot2::aes_string(x = "Part", y = names(byOperator)[i],
                                                                           group = i))
   }
 
 
-  p <- jaspGraphs::themeJasp(p) +
+  p <- JASPgraphs::themeJasp(p) +
     ggplot2::ylab("Measurement") +
     ggplot2::scale_y_continuous(limits = c(min(meansPerOperator[names(byOperator)]) * 0.9, max(meansPerOperator[names(byOperator)]) * 1.1))
 
@@ -583,11 +583,11 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
   plot$dependOn(c("biasRun"))
 
   p <- ggplot2::ggplot() +
-    jaspGraphs::geom_line(data = dataset, ggplot2::aes(x = index, y = Measurement, group = 1)) +
-    jaspGraphs::geom_point(data = dataset, ggplot2::aes(x = index, y = Measurement)) +
+    JASPgraphs::geom_line(data = dataset, ggplot2::aes(x = index, y = Measurement, group = 1)) +
+    JASPgraphs::geom_point(data = dataset, ggplot2::aes(x = index, y = Measurement)) +
     ggplot2::scale_x_discrete(name = "Index", breaks = c(seq(1, max(index), 5),max(index)))
 
-  p <- jaspGraphs::themeJasp(p) + ggplot2::theme(plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm"))
+  p <- JASPgraphs::themeJasp(p) + ggplot2::theme(plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm"))
 
   plot$plotObject <- p
 
@@ -609,7 +609,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
     data <- data.frame(OperatorA = rowMeans(operatorSplit[[1]][measurements]), OperatorB = rowMeans(operatorSplit[[2]][measurements]))
 
     p <- ggplot2::ggplot(data = data, ggplot2::aes_string(x = "OperatorA", y = "OperatorB")) +
-      jaspGraphs::geom_point() + ggplot2::scale_x_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1)) +
+      JASPgraphs::geom_point() + ggplot2::scale_x_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1)) +
       ggplot2::scale_y_continuous(limits = c(min(dataset[measurements])*0.9,max(dataset[measurements])*1.1))
 
     if (options[["gaugeScatterPlotFitLine"]])
@@ -618,7 +618,7 @@ measurementSystemAnalysisGaugeRR <- function(jaspResults, dataset, options, ...)
     if (options[["gaugeScatterPlotOriginLine"]])
       p <- p + ggplot2::geom_abline(col = "gray", linetype = "dashed")
 
-    p <- jaspGraphs::themeJasp(p)
+    p <- JASPgraphs::themeJasp(p)
 
     plot$plotObject <- p
   }

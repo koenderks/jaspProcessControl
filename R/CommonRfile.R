@@ -15,10 +15,10 @@
   sd1 <- sixsigma$std.dev
   UCL <- max(sixsigma$limits)
   LCL <- min(sixsigma$limits)
-  yBreaks <- jaspGraphs::getPrettyAxisBreaks(c(LCL - 1, UCL + 1, data_plot$means))
+  yBreaks <- JASPgraphs::getPrettyAxisBreaks(c(LCL - 1, UCL + 1, data_plot$means))
 
   yLimits <- range(yBreaks)
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(subgroups))
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(subgroups))
   xLimits <- range(xBreaks)
   dfLabel <- data.frame(
     x = max(xLimits) + 1,
@@ -31,15 +31,15 @@
   )
 
   p <- ggplot2::ggplot(data_plot, ggplot2::aes(x = subgroups, y = means)) +
-    jaspGraphs::geom_line() +
-    jaspGraphs::geom_point(size = 4, fill = ifelse(data_plot$means > UCL | data_plot$means < LCL, "red", "gray")) +
+    JASPgraphs::geom_line() +
+    JASPgraphs::geom_point(size = 4, fill = ifelse(data_plot$means > UCL | data_plot$means < LCL, "red", "gray")) +
     ggplot2::geom_hline(yintercept =  center, color = 'black') +
     ggplot2::geom_hline(yintercept = c(UCL, LCL), color = "red") +
     ggplot2::geom_label(data = dfLabel, mapping = ggplot2::aes(x = x, y = y, label = l),inherit.aes = FALSE) +
     ggplot2::scale_y_continuous(name = "Subgroup Mean" ,limits = yLimits, breaks = yBreaks) +
     ggplot2::scale_x_continuous(name = 'Subgroup', breaks = xBreaks, limits = c(min(xLimits), max(xLimits) + 1)) +
-    jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+    JASPgraphs::geom_rangeframe() +
+    JASPgraphs::themeJaspRaw()
 
   return(p)
 }
@@ -61,9 +61,9 @@
   center <- sixsigma$center
   UCL <- max(sixsigma$limits)
   LCL <- min(sixsigma$limits)
-  yBreaks <- jaspGraphs::getPrettyAxisBreaks(c(UCL, data_plot$range, UCL + 1))
+  yBreaks <- JASPgraphs::getPrettyAxisBreaks(c(UCL, data_plot$range, UCL + 1))
   yLimits <- range(yBreaks)
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(subgroups))
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(subgroups))
   xLimits <- range(xBreaks)
   dfLabel <- data.frame(
     x = max(xLimits) + 1,
@@ -77,15 +77,15 @@
 
 
   p <- ggplot2::ggplot(data_plot, ggplot2::aes(x = subgroups, y = range)) +
-    jaspGraphs::geom_line() +
-    jaspGraphs::geom_point(size = 4, fill = ifelse(data_plot$range > UCL | data_plot$range < LCL, 'red', 'gray')) +
+    JASPgraphs::geom_line() +
+    JASPgraphs::geom_point(size = 4, fill = ifelse(data_plot$range > UCL | data_plot$range < LCL, 'red', 'gray')) +
     ggplot2::geom_hline(yintercept =  center, color = 'black') +
     ggplot2::geom_hline(yintercept = c(UCL,LCL), color = "red") +
     ggplot2::geom_label(data = dfLabel, mapping = ggplot2::aes(x = x, y = y, label = l),inherit.aes = FALSE) +
     ggplot2::scale_y_continuous(name = "Subgroup Range" ,limits = yLimits, breaks = yBreaks) +
     ggplot2::scale_x_continuous(name= "Subgroup" ,breaks = xBreaks, limits = c(min(xLimits), max(xLimits) + 1)) +
-    jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+    JASPgraphs::geom_rangeframe() +
+    JASPgraphs::themeJaspRaw()
 
   return(p)
 }
@@ -161,7 +161,7 @@
   #Quantities
   pSeq <- seq(0.001, 0.999, 0.001)
   ticks <- c(0.1, 1, 5, seq(10, 90, 10), 95, 99, 99.9)
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(min(x), max(x)))
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(min(x), max(x)))
   xlimits <- range(xBreaks)
 
   #Computing according to the distribution
@@ -220,10 +220,10 @@
     ggplot2::geom_line(ggplot2::aes(y = zp, x = percentileEstimate)) +
     ggplot2::geom_line(ggplot2::aes(y = zp, x = percentileLower)) +
     ggplot2::geom_line(ggplot2::aes(y = zp, x = percentileUpper)) +
-    jaspGraphs::geom_point(ggplot2::aes(x= data1$x, y= data1$y)) +
+    JASPgraphs::geom_point(ggplot2::aes(x= data1$x, y= data1$y)) +
     ggplot2::scale_x_continuous(variable, limits = xlimits, breaks = xBreaks) +
     ggplot2::scale_y_continuous('Percent', labels = ticks, breaks = breaksY)
-  p <- jaspGraphs::themeJasp(p)
+  p <- JASPgraphs::themeJasp(p)
   ppPlot$plotObject <-  p
   return(ppPlot)
 }

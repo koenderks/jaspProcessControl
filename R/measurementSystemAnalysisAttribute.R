@@ -269,9 +269,9 @@ measurementSystemAnalysisAttribute <- function(jaspResults, dataset, options, ..
 
     withinDataframe <- data.frame(x = appraiserVector, y = percentWithin)
 
-    pw <- ggplot2::ggplot(withinDataframe, ggplot2::aes(x = x, y = y)) + jaspGraphs::geom_point()
+    pw <- ggplot2::ggplot(withinDataframe, ggplot2::aes(x = x, y = y)) + JASPgraphs::geom_point()
 
-    pw <- jaspGraphs::themeJasp(pw) +
+    pw <- JASPgraphs::themeJasp(pw) +
       ggplot2::ylab("Percent") +
       ggplot2::xlab("Appraiser") +
       ggplot2::scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 10))
@@ -282,9 +282,9 @@ measurementSystemAnalysisAttribute <- function(jaspResults, dataset, options, ..
 
     vsDataframe <- data.frame(x = appraiserVector, y = percentEachVsStandard)
 
-    pvs <- ggplot2::ggplot(vsDataframe, ggplot2::aes(x = x, y = y)) + jaspGraphs::geom_point()
+    pvs <- ggplot2::ggplot(vsDataframe, ggplot2::aes(x = x, y = y)) + JASPgraphs::geom_point()
 
-    pvs <- jaspGraphs::themeJasp(pvs) +
+    pvs <- JASPgraphs::themeJasp(pvs) +
       ggplot2::ylab("Percent") +
       ggplot2::xlab("Appraiser") +
       ggplot2::scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 10))

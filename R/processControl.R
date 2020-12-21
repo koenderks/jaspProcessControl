@@ -89,9 +89,9 @@ processControl <- function(jaspResults, dataset, options){
   center <- sixsigma$center
   UCL <- max(sixsigma$limits)
   LCL <- min(sixsigma$limits)
-  yBreaks <- jaspGraphs::getPrettyAxisBreaks(c(LCL, data_plot$Stdv, UCL + 1))
+  yBreaks <- JASPgraphs::getPrettyAxisBreaks(c(LCL, data_plot$Stdv, UCL + 1))
   yLimits <- range(yBreaks)
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(subgroups))
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(subgroups))
   xLimits <- range(xBreaks)
   dfLabel <- data.frame(
     x = max(xLimits) + 1,
@@ -103,15 +103,15 @@ processControl <- function(jaspResults, dataset, options){
     )
   )
   p <- ggplot2::ggplot(data_plot, ggplot2::aes(x = subgroups, y = Stdv)) +
-    jaspGraphs::geom_line() +
-    jaspGraphs::geom_point(size = 4, fill = ifelse(data_plot$Stdv > UCL | data_plot$Stdv < LCL, 'red', 'gray')) +
+    JASPgraphs::geom_line() +
+    JASPgraphs::geom_point(size = 4, fill = ifelse(data_plot$Stdv > UCL | data_plot$Stdv < LCL, 'red', 'gray')) +
     ggplot2::geom_hline(yintercept =  center, color = 'black') +
     ggplot2::geom_hline(yintercept = c(UCL, LCL), color = "red") +
     ggplot2::geom_label(data = dfLabel, mapping = ggplot2::aes(x = x, y = y, label = l),inherit.aes = FALSE) +
     ggplot2::scale_y_continuous(name = "Subgroup Standard Deviation" ,limits = yLimits, breaks = yBreaks) +
     ggplot2::scale_x_continuous(name = 'Subgroup', breaks = xBreaks, limits = c(min(xLimits), max(xLimits) + 1)) +
-    jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+    JASPgraphs::geom_rangeframe() +
+    JASPgraphs::themeJaspRaw()
 
   return(p)
 }
@@ -127,9 +127,9 @@ processControl <- function(jaspResults, dataset, options){
   center <- sixsigma$center
   UCL <- max(sixsigma$limits)
   LCL <- min(sixsigma$limits)
-  yBreaks <- jaspGraphs::getPrettyAxisBreaks(c(LCL - 1, UCL + 1))
+  yBreaks <- JASPgraphs::getPrettyAxisBreaks(c(LCL - 1, UCL + 1))
   yLimits <- range(yBreaks)
-  xBreaks <- jaspGraphs::getPrettyAxisBreaks(c(subgroups))
+  xBreaks <- JASPgraphs::getPrettyAxisBreaks(c(subgroups))
   xLimits <- range(xBreaks)
   dfLabel <- data.frame(
     x = max(xLimits) + 1,
@@ -143,15 +143,15 @@ processControl <- function(jaspResults, dataset, options){
 
   #plot
   p <- ggplot2::ggplot(data, ggplot2::aes(x = subgroups, y = process)) +
-    jaspGraphs::geom_line() +
-    jaspGraphs::geom_point(size = 4, fill = ifelse(data$process > UCL | data$process < LCL, 'red', 'gray')) +
+    JASPgraphs::geom_line() +
+    JASPgraphs::geom_point(size = 4, fill = ifelse(data$process > UCL | data$process < LCL, 'red', 'gray')) +
     ggplot2::geom_hline(yintercept =  center, color = 'black') +
     ggplot2::geom_hline(yintercept = c(UCL, LCL), color = "red") +
     ggplot2::geom_label(data = dfLabel, mapping = ggplot2::aes(x = x, y = y, label = l),inherit.aes = FALSE) +
     ggplot2::scale_y_continuous(name = "Value" ,limits = yLimits, breaks = yBreaks) +
     ggplot2::scale_x_continuous(name = 'Observations', breaks = xBreaks, limits = c(min(xLimits), max(xLimits) + 1)) +
-    jaspGraphs::geom_rangeframe() +
-    jaspGraphs::themeJaspRaw()
+    JASPgraphs::geom_rangeframe() +
+    JASPgraphs::themeJaspRaw()
 
   ppPlot$plotObject <-  p
   return(ppPlot)
